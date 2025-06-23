@@ -13,7 +13,7 @@ function estimateCO2Saved(originalBytes, compressedBytes) {
   return savedGrams.toFixed(2) + ' g';
 }
 
-// Compress to WebP using canvas
+// Compression with canvas (WebP only)
 function compressImageToWebp(file, callback) {
   const reader = new FileReader();
   reader.onload = function (event) {
@@ -44,7 +44,7 @@ function compressImageToWebp(file, callback) {
                 .then(res => res.blob())
                 .then(fallbackBlob => callback(fallbackBlob, extension))
                 .catch(() => {
-                  alert("Unable to export as WebP. Please try another browser.");
+                  alert("Unable to export in WebP. Please try another browser.");
                 });
             } catch (err) {
               alert("WebP export error: " + err.message);
@@ -56,7 +56,7 @@ function compressImageToWebp(file, callback) {
       );
     };
     img.onerror = function () {
-      alert("Error loading image.");
+      alert("Error loading the image.");
     };
     img.src = event.target.result;
   };
@@ -72,7 +72,7 @@ imageInput.addEventListener('change', function (e) {
   const originalSize = file.size;
   document.getElementById('originalSize').textContent = formatSize(originalSize);
 
-  // Preview image
+  // Image preview
   const previewImg = document.getElementById('previewImage');
   const readerPreview = new FileReader();
   readerPreview.onload = function (event) {
