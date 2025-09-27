@@ -40,6 +40,9 @@ Designed for website creators (WordPress, Wix, Shopify…), marketing teams, and
 git clone https://github.com/<your-account>/ecomedia-manager.git
 cd ecomedia-manager
 
+[![Try it online](https://img.shields.io/badge/Try%20it-online-brightgreen)](https://studioparachute.co/en/free-marketing-tools-roi-analytics-tool)
+
+
 # 2) Install dependencies (example: Node.js)
 # Replace with the command for your project (npm, pnpm, yarn, pip, etc.)
 npm install
