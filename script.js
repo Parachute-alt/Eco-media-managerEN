@@ -30,14 +30,13 @@ function compressImageToWebp(file, callback) {
 
       const format = 'image/webp';
       const extension = 'webp';
-      const quality = 0.8;
+      const quality = 0.5;
 
       canvas.toBlob(
         function (blob) {
           if (blob) {
             callback(blob, extension);
           } else {
-            // Fallback WebP (if blob is null)
             try {
               const dataUrl = canvas.toDataURL(format, quality);
               fetch(dataUrl)
@@ -72,7 +71,6 @@ imageInput.addEventListener('change', function (e) {
   const originalSize = file.size;
   document.getElementById('originalSize').textContent = formatSize(originalSize);
 
-  // Image preview
   const previewImg = document.getElementById('previewImage');
   const readerPreview = new FileReader();
   readerPreview.onload = function (event) {
@@ -87,6 +85,13 @@ imageInput.addEventListener('change', function (e) {
     document.getElementById('co2Saved').textContent = estimateCO2Saved(originalSize, compressedSize);
 
     const downloadLink = document.getElementById('downloadLink');
+
+    if (compressedSize >= originalSize * 0.98) {
+      document.getElementById('output').classList.add('hidden');
+      alert("To preserve visual quality, no further compression is possible for this image.");
+      return;
+    }
+
     downloadLink.href = URL.createObjectURL(compressedBlob);
     downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
 
