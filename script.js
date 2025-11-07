@@ -1,4 +1,3 @@
-
 // Convert bytes to KB
 function formatSize(bytes) {
   return (bytes / 1024).toFixed(2) + ' KB';
@@ -85,16 +84,24 @@ imageInput.addEventListener('change', function (e) {
     document.getElementById('co2Saved').textContent = estimateCO2Saved(originalSize, compressedSize);
 
     const downloadLink = document.getElementById('downloadLink');
+    const output = document.getElementById('output');
+    const messageBox = document.getElementById('alreadyOptimizedMessage');
 
-    if (compressedSize >= originalSize * 0.98) {
-      document.getElementById('output').classList.add('hidden');
-      alert("To preserve visual quality, no further compression is possible for this image.");
-      return;
+    const sizeReduction = originalSize - compressedSize;
+    const reductionPercent = (sizeReduction / originalSize) * 100;
+
+    if (reductionPercent < 2) {
+      // ✅ Image déjà optimisée
+      downloadLink.style.display = 'none';
+      messageBox.classList.remove('hidden');
+    } else {
+      // ✅ Compression utile
+      downloadLink.href = URL.createObjectURL(compressedBlob);
+      downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
+      downloadLink.style.display = 'inline-block';
+      messageBox.classList.add('hidden');
     }
 
-    downloadLink.href = URL.createObjectURL(compressedBlob);
-    downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
-
-    document.getElementById('output').classList.remove('hidden');
+    output.classList.remove('hidden');
   });
 });
