@@ -85,17 +85,17 @@ imageInput.addEventListener('change', function (e) {
 
     const downloadLink = document.getElementById('downloadLink');
     const output = document.getElementById('output');
-    const messageBox = document.getElementById('alreadyOptimizedMessage');
+    const messageBox = document.getElementById('noCompressionMessage'); // ✅ Corrigé ici
 
     const sizeReduction = originalSize - compressedSize;
     const reductionPercent = (sizeReduction / originalSize) * 100;
 
     if (reductionPercent < 2) {
-      //  Image déjà optimisée
+      // ✅ Image déjà bien compressée
       downloadLink.style.display = 'none';
       messageBox.classList.remove('hidden');
     } else {
-      //  Compression utile
+      // ✅ Compression utile, on montre le lien
       downloadLink.href = URL.createObjectURL(compressedBlob);
       downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
       downloadLink.style.display = 'inline-block';
