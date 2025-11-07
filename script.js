@@ -91,11 +91,11 @@ imageInput.addEventListener('change', function (e) {
     const reductionPercent = (sizeReduction / originalSize) * 100;
 
     if (reductionPercent < 2) {
-      // ✅ Image déjà optimisée
+      //  Image déjà optimisée
       downloadLink.style.display = 'none';
       messageBox.classList.remove('hidden');
     } else {
-      // ✅ Compression utile
+      //  Compression utile
       downloadLink.href = URL.createObjectURL(compressedBlob);
       downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
       downloadLink.style.display = 'inline-block';
