@@ -1,9 +1,8 @@
-// Convert bytes to KB
+
 function formatSize(bytes) {
   return (bytes / 1024).toFixed(2) + ' KB';
 }
 
-// Simple estimate: 1 MB ≈ 0.5g CO₂ (indicative value)
 function estimateCO2Saved(originalBytes, compressedBytes) {
   const originalMB = originalBytes / (1024 * 1024);
   const compressedMB = compressedBytes / (1024 * 1024);
@@ -12,7 +11,6 @@ function estimateCO2Saved(originalBytes, compressedBytes) {
   return savedGrams.toFixed(2) + ' g';
 }
 
-// Compression with canvas (WebP only)
 function compressImageToWebp(file, callback) {
   const reader = new FileReader();
   reader.onload = function (event) {
@@ -85,17 +83,15 @@ imageInput.addEventListener('change', function (e) {
 
     const downloadLink = document.getElementById('downloadLink');
     const output = document.getElementById('output');
-    const messageBox = document.getElementById('noCompressionMessage'); // ✅ Corrigé ici
+    const messageBox = document.getElementById('alreadyOptimizedMessage');
 
     const sizeReduction = originalSize - compressedSize;
     const reductionPercent = (sizeReduction / originalSize) * 100;
 
     if (reductionPercent < 2) {
-      // ✅ Image déjà bien compressée
       downloadLink.style.display = 'none';
       messageBox.classList.remove('hidden');
     } else {
-      // ✅ Compression utile, on montre le lien
       downloadLink.href = URL.createObjectURL(compressedBlob);
       downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
       downloadLink.style.display = 'inline-block';
