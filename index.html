@@ -35,22 +35,29 @@
       <p class="text-sm mb-2">Original size: <span id="originalSize"></span></p>
       <p class="text-sm mb-2">Compressed size: <span id="compressedSize"></span></p>
       <p class="text-sm mb-4 font-semibold text-green-600">Estimated CO₂ savings: <span id="co2Saved"></span></p>
+
+      <!-- Message if image is already optimized -->
+      <p id="noCompressionMessage" class="text-sm text-green-700 font-medium mt-4 hidden">
+        ✅ Good news: your image is already optimized!<br />
+        No additional compression was applied to preserve its quality.
+      </p>
+
+      <!-- Download link -->
       <a id="downloadLink" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block mb-2" download>
         📥 Download the compressed image in WebP format
       </a>
+
       <p class="text-xs text-gray-500 mt-2">
         WebP format is up to 30% lighter than JPEG/PNG while maintaining excellent quality. Recommended for fast loading and SEO.
-      </p>
-
-      <!-- Message if no compression applied -->
-      <p id="noCompressionMessage" class="text-sm text-green-700 font-medium mt-4 hidden">
-        ✅ Good news: your image is already optimized! No additional compression was applied to preserve its quality.
       </p>
     </div>
   </div>
 
-  <p class="mt-8 text-sm text-gray-500 text-center">Powered by <a href="https://studioparachute.co" class="underline hover:text-[#FE603A]">Studio Parachute</a></p>
+  <p class="mt-8 text-sm text-gray-500 text-center">
+    Powered by <a href="https://studioparachute.co" class="underline hover:text-[#FE603A]">Studio Parachute</a>
+  </p>
 
+  <!-- JS script -->
   <script src="script.js"></script>
 </body>
 </html>
