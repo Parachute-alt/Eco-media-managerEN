@@ -1,8 +1,9 @@
-
+// Convert bytes to KB
 function formatSize(bytes) {
   return (bytes / 1024).toFixed(2) + ' KB';
 }
 
+// Simple estimate: 1 MB ≈ 0.5g CO₂ (indicative value)
 function estimateCO2Saved(originalBytes, compressedBytes) {
   const originalMB = originalBytes / (1024 * 1024);
   const compressedMB = compressedBytes / (1024 * 1024);
@@ -11,6 +12,7 @@ function estimateCO2Saved(originalBytes, compressedBytes) {
   return savedGrams.toFixed(2) + ' g';
 }
 
+// Compression with canvas (WebP only)
 function compressImageToWebp(file, callback) {
   const reader = new FileReader();
   reader.onload = function (event) {
@@ -82,22 +84,16 @@ imageInput.addEventListener('change', function (e) {
     document.getElementById('co2Saved').textContent = estimateCO2Saved(originalSize, compressedSize);
 
     const downloadLink = document.getElementById('downloadLink');
-    const output = document.getElementById('output');
-    const messageBox = document.getElementById('alreadyOptimizedMessage');
 
-    const sizeReduction = originalSize - compressedSize;
-    const reductionPercent = (sizeReduction / originalSize) * 100;
-
-    if (reductionPercent < 2) {
-      downloadLink.style.display = 'none';
-      messageBox.classList.remove('hidden');
-    } else {
-      downloadLink.href = URL.createObjectURL(compressedBlob);
-      downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
-      downloadLink.style.display = 'inline-block';
-      messageBox.classList.add('hidden');
+    if (compressedSize >= originalSize * 0.98) {
+      document.getElementById('output').classList.add('hidden');
+      alert("To preserve visual quality, no further compression is possible for this image.");
+      return;
     }
 
-    output.classList.remove('hidden');
+    downloadLink.href = URL.createObjectURL(compressedBlob);
+    downloadLink.download = 'compressed_' + file.name.replace(/\.[^/.]+$/, '') + '.' + extension;
+
+    document.getElementById('output').classList.remove('hidden');
   });
 });
